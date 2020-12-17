@@ -1,0 +1,53 @@
+﻿@model IEnumerable<LogKyrcach.Models.Workplace>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Список рабочих мест</h1>
+
+<p>
+    <a asp-action="Create">Создать новое</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdComputerNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdMonitorNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRoomNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdComputerNavigation.Inv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdMonitorNavigation.Inv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRoomNavigation.RoomNumber)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Продробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

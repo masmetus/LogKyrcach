@@ -1,0 +1,78 @@
+﻿@model LogKyrcach.Models.Room
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Room</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RoomNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RoomNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IdDepartmentNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdDepartmentNavigation.Name)
+        </dd>      
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Workplaces.FirstOrDefault().Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Workplaces.FirstOrDefault().IdRoom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Workplaces.FirstOrDefault().IdComputerNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Workplaces.FirstOrDefault().IdMonitorNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Workplaces)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdComputerNavigation.Inv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdMonitorNavigation.Inv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdRoomNavigation.RoomNumber)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
