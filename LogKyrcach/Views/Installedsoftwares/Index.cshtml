@@ -1,0 +1,83 @@
+﻿@model IEnumerable<LogKyrcach.Models.Installedsoftware>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdComputer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LicenseStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LicenseEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InstallationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRoom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEnginereNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSoftwareNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeLicense)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdComputer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LicenseStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LicenseEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstallationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRoom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEnginereNavigation.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSoftwareNavigation.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeLicense.TypeLicense1)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

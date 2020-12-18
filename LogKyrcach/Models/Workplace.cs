@@ -9,7 +9,7 @@ namespace LogKyrcach.Models
     public partial class Workplace
     {
         public int Id { get; set; }
-        [Display(Name = "Номер кабинета")]
+        [Display(Name = "Номер рабочего места")]
         public string Number { get; set; }
         public int? IdRoom { get; set; }
         public int IdComputer { get; set; }

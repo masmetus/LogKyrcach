@@ -38,6 +38,9 @@ namespace LogKyrcach.Controllers
             var room = await _context.Rooms
                 .Include(r => r.IdDepartmentNavigation)
                 .Include(r => r.Workplaces)
+                .ThenInclude(r => r.IdMonitorNavigation)
+                .Include(r => r.Workplaces)
+                .ThenInclude(r => r.IdComputerNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (room == null)
             {
