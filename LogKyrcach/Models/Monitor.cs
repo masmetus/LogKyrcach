@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -16,7 +15,6 @@ namespace LogKyrcach.Models
         public int Id { get; set; }
         public string Model { get; set; }
         public string SN { get; set; }
-        [Display(Name="Инв. номер монитора")]
         public string Inv { get; set; }
         public bool? IsWorking { get; set; }
         public int IdWorkPlace { get; set; }

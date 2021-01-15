@@ -9,7 +9,6 @@ namespace LogKyrcach.Models
     {
         public Worker()
         {
-            Departments = new HashSet<Department>();
             Installedsoftwares = new HashSet<Installedsoftware>();
             Requests = new HashSet<Request>();
         }
@@ -22,8 +21,8 @@ namespace LogKyrcach.Models
         public int PostId { get; set; }
         public int DepartmentNameId { get; set; }
 
+        public virtual Department DepartmentName { get; set; }
         public virtual PostType Post { get; set; }
-        public virtual ICollection<Department> Departments { get; set; }
         public virtual ICollection<Installedsoftware> Installedsoftwares { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
     }

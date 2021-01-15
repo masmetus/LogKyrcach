@@ -1,0 +1,64 @@
+﻿@model LogKyrcach.Models.Request
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Request</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="InstalledsoftwareId" class="control-label"></label>
+                <select asp-for="InstalledsoftwareId" class="form-control" asp-items="ViewBag.InstalledsoftwareId"></select>
+                <span asp-validation-for="InstalledsoftwareId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdComputer" class="control-label"></label>
+                <input asp-for="IdComputer" class="form-control" />
+                <span asp-validation-for="IdComputer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequestStatus" class="control-label"></label>
+                <input asp-for="RequestStatus" class="form-control" />
+                <span asp-validation-for="RequestStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationDate" class="control-label"></label>
+                <input asp-for="ApplicationDate" class="form-control" />
+                <span asp-validation-for="ApplicationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescriptionOfTheProblem" class="control-label"></label>
+                <input asp-for="DescriptionOfTheProblem" class="form-control" />
+                <span asp-validation-for="DescriptionOfTheProblem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationClosingDate" class="control-label"></label>
+                <input asp-for="ApplicationClosingDate" class="form-control" />
+                <span asp-validation-for="ApplicationClosingDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdEnginner" class="control-label"></label>
+                <select asp-for="IdEnginner" class="form-control" asp-items="ViewBag.IdEnginner"></select>
+                <span asp-validation-for="IdEnginner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
