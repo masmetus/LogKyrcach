@@ -14,14 +14,19 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="InstalledsoftwareId" class="control-label"></label>
-                <select asp-for="InstalledsoftwareId" class="form-control" asp-items="ViewBag.InstalledsoftwareId"></select>
-                <span asp-validation-for="InstalledsoftwareId" class="text-danger"></span>
+                <label asp-for="IdRoom" class="control-label"></label>
+                <input asp-for="IdRoom" class="form-control" />
+                <span asp-validation-for="IdRoom" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IdComputer" class="control-label"></label>
                 <input asp-for="IdComputer" class="form-control" />
                 <span asp-validation-for="IdComputer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InstalledsoftwareId" class="control-label"></label>
+                <select asp-for="InstalledsoftwareId" class="form-control" asp-items="ViewBag.InstalledsoftwareId"></select>
+                <span asp-validation-for="InstalledsoftwareId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RequestStatus" class="control-label"></label>
@@ -44,9 +49,9 @@
                 <span asp-validation-for="ApplicationClosingDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdEnginner" class="control-label"></label>
-                <select asp-for="IdEnginner" class="form-control" asp-items="ViewBag.IdEnginner"></select>
-                <span asp-validation-for="IdEnginner" class="text-danger"></span>
+                <label asp-for="IdEngineer" class="control-label"></label>
+                <select asp-for="IdEngineer" class="form-control" asp-items="ViewBag.IdEngineer"></select>
+                <span asp-validation-for="IdEngineer" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

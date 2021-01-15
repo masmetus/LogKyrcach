@@ -21,7 +21,11 @@ namespace LogKyrcach.Controllers
         // GET: Installedsoftwares
         public async Task<IActionResult> Index()
         {
-            var softwareContext = _context.Installedsoftwares.Include(i => i.IdEnginereNavigation).Include(i => i.IdSoftwareNavigation).Include(i => i.TypeLicense);
+            var softwareContext = _context.Installedsoftwares
+                .Include(i => i.IdRoomNavigation)
+                .Include(i => i.IdEnginereNavigation)
+                .Include(i => i.IdSoftwareNavigation)
+                .Include(i => i.TypeLicense);
             return View(await softwareContext.ToListAsync());
         }
 

@@ -25,6 +25,7 @@ namespace LogKyrcach.Models
 
         public virtual Computer IdComputerNavigation { get; set; }
         public virtual Worker IdEnginereNavigation { get; set; }
+        public virtual Room IdRoomNavigation { get; set; }
         public virtual Software IdSoftwareNavigation { get; set; }
         public virtual Typelicense TypeLicense { get; set; }
         public virtual ICollection<Request> Requests { get; set; }

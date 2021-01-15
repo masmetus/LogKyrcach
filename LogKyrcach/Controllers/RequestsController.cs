@@ -22,14 +22,18 @@ namespace LogKyrcach.Controllers
         public async Task<IActionResult> Index()
         {
             var softwareContext = _context.Requests
+                .Include(r => r.Installedsoftware).ThenInclude(r => r.IdRoomNavigation)
+
                 .Include(r => r.Installedsoftware).ThenInclude(r => r.IdSoftwareNavigation)
-                .Include(r => r.IdEnginnerNavigation).Include(r => r.Installedsoftware)
+
+                .Include(r => r.IdEngineerNavigation).Include(r => r.Installedsoftware) 
+
                 .Include(r => r.Installedsoftware).ThenInclude(r => r.IdComputerNavigation);
             return View(await softwareContext.ToListAsync());
         }
 
         // GET: Requests/Details/5
-     /*   public async Task<IActionResult> Details(int? id)
+      /*  public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -37,10 +41,10 @@ namespace LogKyrcach.Controllers
             }
 
             var request = await _context.Requests
-                .Include(r => r.Installedsoftware).ThenInclude(r => r.IdSoftwareNavigation)
-                .Include(r => r.IdEnginnerNavigation).Include(r => r.Installedsoftware)
-                .Include(r => r.Installedsoftware).ThenInclude(r => r.IdComputerNavigation)
-                .FirstOrDefaultAsync(m => m.Id == id);
+               .Include(r => r.Installedsoftware).ThenInclude(r => r.IdSoftwareNavigation)
+               .Include(r => r.IdEngineerNavigation).Include(r => r.Installedsoftware)
+               .Include(r => r.Installedsoftware).ThenInclude(r => r.IdComputerNavigation)
+               .FirstOrDefaultAsync(m => m.Id == id);
 
             if (request == null)
             {
@@ -48,20 +52,20 @@ namespace LogKyrcach.Controllers
             }
 
             return View(request);
-        }
-     */
+        } */
+
         // GET: Requests/Create
         public IActionResult Create()
         {
-            ViewData["IdEnginner"] = new SelectList(_context.Workers, "Id", "FirstName");
+            ViewData["IdEngineer"] = new SelectList(_context.Workers, "Id", "FirstName");
 
             ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares
                 .Include(r => r.IdComputerNavigation)
-                .Select(x => new {id =x.Id, inv = x.IdComputerNavigation.Inv }), "id", "inv");
+                .Select(x => new { id = x.Id, inv = x.IdComputerNavigation.Inv }), "id", "inv");
 
-             ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares                
-                 .Include(r => r.IdSoftwareNavigation)
-                 .Select(x => new {id = x.Id, name = x.IdSoftwareNavigation.Name }), "id", "name");
+            ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares
+                .Include(r => r.IdSoftwareNavigation)
+                .Select(x => new { id = x.Id, name = x.IdSoftwareNavigation.Name }), "id", "name");
 
             return View();
         }
@@ -71,7 +75,7 @@ namespace LogKyrcach.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,InstalledsoftwareId,IdComputer,RequestStatus,ApplicationDate,DescriptionOfTheProblem,ApplicationClosingDate,IdEnginner")] Request request)
+        public async Task<IActionResult> Create([Bind("Id,IdRoom,IdComputer,InstalledsoftwareId,RequestStatus,ApplicationDate,DescriptionOfTheProblem,ApplicationClosingDate,IdEngineer")] Request request)
         {
             if (ModelState.IsValid)
             {
@@ -79,8 +83,10 @@ namespace LogKyrcach.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEnginner"] = new SelectList(_context.Workers, "Id", "FirstName", request.IdEnginner);
+            ViewData["IdEngineer"] = new SelectList(_context.Workers, "Id", "FirstName", request.IdEngineer);
+
             ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares, "Id", "Id", request.InstalledsoftwareId);
+
             ViewData["IdComputer"] = new SelectList(_context.Installedsoftwares, "Id", "Id", request.IdComputer);
             return View(request);
         }
@@ -98,7 +104,7 @@ namespace LogKyrcach.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdEnginner"] = new SelectList(_context.Workers, "Id", "FirstName", request.IdEnginner);
+            ViewData["IdEngineer"] = new SelectList(_context.Workers, "Id", "FirstName", request.IdEngineer);
             ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares, "Id", "Id", request.InstalledsoftwareId);
             return View(request);
         }
@@ -108,7 +114,7 @@ namespace LogKyrcach.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,InstalledsoftwareId,IdComputer,RequestStatus,ApplicationDate,DescriptionOfTheProblem,ApplicationClosingDate,IdEnginner")] Request request)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,IdRoom,IdComputer,InstalledsoftwareId,RequestStatus,ApplicationDate,DescriptionOfTheProblem,ApplicationClosingDate,IdEngineer")] Request request)
         {
             if (id != request.Id)
             {
@@ -135,7 +141,7 @@ namespace LogKyrcach.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEnginner"] = new SelectList(_context.Workers, "Id", "FirstName", request.IdEnginner);
+            ViewData["IdEngineer"] = new SelectList(_context.Workers, "Id", "FirstName", request.IdEngineer);
             ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares, "Id", "Id", request.InstalledsoftwareId);
             return View(request);
         }
@@ -149,7 +155,7 @@ namespace LogKyrcach.Controllers
             }
 
             var request = await _context.Requests
-                .Include(r => r.IdEnginnerNavigation)
+                .Include(r => r.IdEngineerNavigation)
                 .Include(r => r.Installedsoftware)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (request == null)

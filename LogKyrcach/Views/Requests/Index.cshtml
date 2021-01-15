@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<LogKyrcach.Models.Request>
 
-
 @{
     ViewData["Title"] = "Index";
 }
@@ -13,6 +12,9 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRoom)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdComputer)
             </th>
@@ -29,7 +31,7 @@
                 @Html.DisplayNameFor(model => model.ApplicationClosingDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdEnginnerNavigation)
+                @Html.DisplayNameFor(model => model.IdEngineerNavigation)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Installedsoftware)
@@ -38,9 +40,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
+@foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Installedsoftware.IdRoomNavigation.RoomNumber)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Installedsoftware.IdComputerNavigation.Inv)
             </td>
@@ -57,22 +61,21 @@
                 @Html.DisplayFor(modelItem => item.ApplicationClosingDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdEnginnerNavigation.Surname)
+                @Html.DisplayFor(modelItem => item.IdEngineerNavigation.Surname)
 
-                @Html.DisplayFor(modelItem => item.IdEnginnerNavigation.FirstName)
+                @Html.DisplayFor(modelItem => item.IdEngineerNavigation.FirstName)
 
-                @Html.DisplayFor(modelItem => item.IdEnginnerNavigation.Patronymic)
+                @Html.DisplayFor(modelItem => item.IdEngineerNavigation.Patronymic)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Installedsoftware.IdSoftwareNavigation.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a>
-            </td>
-            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> |
+
                 <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
             </td>
         </tr>
-        }
+}
     </tbody>
 </table>

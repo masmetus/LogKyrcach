@@ -9,6 +9,7 @@ namespace LogKyrcach.Models
     {
         public Room()
         {
+            Installedsoftwares = new HashSet<Installedsoftware>();
             Workplaces = new HashSet<Workplace>();
         }
 
@@ -17,6 +18,7 @@ namespace LogKyrcach.Models
         public int IdDepartment { get; set; }
 
         public virtual Department IdDepartmentNavigation { get; set; }
+        public virtual ICollection<Installedsoftware> Installedsoftwares { get; set; }
         public virtual ICollection<Workplace> Workplaces { get; set; }
     }
 }

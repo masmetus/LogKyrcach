@@ -27,11 +27,9 @@ namespace LogKyrcach.Models
         public virtual DbSet<Installedsoftware> Installedsoftwares { get; set; }
         public virtual DbSet<Institute> Institutes { get; set; }
         public virtual DbSet<Monitor> Monitors { get; set; }
-        public virtual DbSet<OpenRequest> OpenRequests { get; set; }
         public virtual DbSet<PostType> PostTypes { get; set; }
         public virtual DbSet<Request> Requests { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
-        public virtual DbSet<Soft> Softs { get; set; }
         public virtual DbSet<Software> Softwares { get; set; }
         public virtual DbSet<Typelicense> Typelicenses { get; set; }
         public virtual DbSet<Worker> Workers { get; set; }
@@ -220,6 +218,8 @@ namespace LogKyrcach.Models
 
                 entity.HasIndex(e => e.IdEnginere, "ID_enginere");
 
+                entity.HasIndex(e => e.IdRoom, "ID_room");
+
                 entity.HasIndex(e => e.TypeLicenseId, "TypeLicense_ID");
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -258,11 +258,17 @@ namespace LogKyrcach.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("installedsoftware_ibfk_5");
 
+                entity.HasOne(d => d.IdRoomNavigation)
+                    .WithMany(p => p.Installedsoftwares)
+                    .HasForeignKey(d => d.IdRoom)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("installedsoftware_ibfk_12");
+
                 entity.HasOne(d => d.IdSoftwareNavigation)
                     .WithMany(p => p.Installedsoftwares)
                     .HasForeignKey(d => d.IdSoftware)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("installedsoftware_ibfk_7");
+                    .HasConstraintName("installedsoftware_ibfk_11");
 
                 entity.HasOne(d => d.TypeLicense)
                     .WithMany(p => p.Installedsoftwares)
@@ -317,15 +323,6 @@ namespace LogKyrcach.Models
                     .HasCollation("utf8mb4_0900_ai_ci");
             });
 
-            modelBuilder.Entity<OpenRequest>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("open_request");
-
-                entity.HasComment("View 'software.open_request' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them");
-            });
-
             modelBuilder.Entity<PostType>(entity =>
             {
                 entity.ToTable("post_type");
@@ -344,11 +341,11 @@ namespace LogKyrcach.Models
             {
                 entity.ToTable("request");
 
-                entity.HasIndex(e => e.IdComputer, "ID_Computer");
+                entity.HasIndex(e => e.IdEngineer, "ID_Engineer");
 
-                entity.HasIndex(e => e.IdEnginner, "ID_Enginner");
+                entity.HasIndex(e => e.IdRoom, "ID_room");
 
-                entity.HasIndex(e => e.InstalledsoftwareId, "request_ibfk_6");
+                entity.HasIndex(e => e.InstalledsoftwareId, "installedsoftware_ID");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -365,7 +362,9 @@ namespace LogKyrcach.Models
 
                 entity.Property(e => e.IdComputer).HasColumnName("ID_Computer");
 
-                entity.Property(e => e.IdEnginner).HasColumnName("ID_Enginner");
+                entity.Property(e => e.IdEngineer).HasColumnName("ID_Engineer");
+
+                entity.Property(e => e.IdRoom).HasColumnName("ID_room");
 
                 entity.Property(e => e.InstalledsoftwareId).HasColumnName("installedsoftware_ID");
 
@@ -373,16 +372,16 @@ namespace LogKyrcach.Models
                     .IsRequired()
                     .HasDefaultValueSql("'1'");
 
-                entity.HasOne(d => d.IdEnginnerNavigation)
+                entity.HasOne(d => d.IdEngineerNavigation)
                     .WithMany(p => p.Requests)
-                    .HasForeignKey(d => d.IdEnginner)
-                    .HasConstraintName("request_ibfk_3");
+                    .HasForeignKey(d => d.IdEngineer)
+                    .HasConstraintName("request_ibfk_2");
 
                 entity.HasOne(d => d.Installedsoftware)
                     .WithMany(p => p.Requests)
                     .HasForeignKey(d => d.InstalledsoftwareId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("request_ibfk_2");
+                    .HasConstraintName("request_ibfk_1");
             });
 
             modelBuilder.Entity<Room>(entity =>
@@ -406,15 +405,6 @@ namespace LogKyrcach.Models
                     .HasForeignKey(d => d.IdDepartment)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("room_ibfk_1");
-            });
-
-            modelBuilder.Entity<Soft>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("soft");
-
-                entity.HasComment("View 'software.soft' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them");
             });
 
             modelBuilder.Entity<Software>(entity =>
