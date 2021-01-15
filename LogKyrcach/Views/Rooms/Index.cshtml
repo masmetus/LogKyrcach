@@ -17,10 +17,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdDepartmentNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Workplaces)
-            </th>
+            </th>           
             <th></th>
         </tr>
     </thead>
@@ -32,10 +29,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdDepartmentNavigation.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Workplaces.FirstOrDefault().Id)
-            </td>
+            </td>          
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

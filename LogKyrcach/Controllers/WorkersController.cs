@@ -9,25 +9,23 @@ using LogKyrcach.Models;
 
 namespace LogKyrcach.Controllers
 {
-    public class RoomsController : Controller
+    public class WorkersController : Controller
     {
         private readonly softwareContext _context;
 
-        public RoomsController(softwareContext context)
+        public WorkersController(softwareContext context)
         {
             _context = context;
         }
 
-        // GET: Rooms
+        // GET: Workers
         public async Task<IActionResult> Index()
         {
-            var softwareContext = _context.Rooms.Include(r => r.IdDepartmentNavigation).Include(r => r.Workplaces);
+            var softwareContext = _context.Workers.Include(w => w.DepartmentName).Include(w => w.Post);
             return View(await softwareContext.ToListAsync());
         }
 
-        
-
-        // GET: Rooms/Details/5
+        // GET: Workers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,47 +33,45 @@ namespace LogKyrcach.Controllers
                 return NotFound();
             }
 
-            var room = await _context.Rooms
-                .Include(r => r.IdDepartmentNavigation)
-                .Include(r => r.Workplaces)
-                .ThenInclude(r => r.IdMonitorNavigation)
-                .Include(r => r.Workplaces)
-                .ThenInclude(r => r.IdComputerNavigation)
+            var worker = await _context.Workers
+                .Include(w => w.DepartmentName)
+                .Include(w => w.Post)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (room == null)
+            if (worker == null)
             {
                 return NotFound();
             }
 
-            return View(room);
+            return View(worker);
         }
 
-        // GET: Rooms/Create
+        // GET: Workers/Create
         public IActionResult Create()
         {
-            ViewData["IdDepartment"] = new SelectList(_context.Departments, "Id", "Name");
-            ViewData["IdWorkplace"] = new SelectList(_context.Workplaces, "Id", "Id");
+            ViewData["DepartmentNameId"] = new SelectList(_context.Departments, "Id", "Name");
+            ViewData["PostId"] = new SelectList(_context.PostTypes, "Id", "PostType1");
             return View();
         }
 
-        // POST: Rooms/Create
+        // POST: Workers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RoomNumber,IdDepartment")] Room room)
+        public async Task<IActionResult> Create([Bind("Id,Surname,FirstName,Patronymic,PhoneNumber,PostId,DepartmentNameId")] Worker worker)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(room);
+                _context.Add(worker);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdDepartment"] = new SelectList(_context.Departments, "Id", "Name", room.IdDepartment);           
-            return View(room);
+            ViewData["DepartmentNameId"] = new SelectList(_context.Departments, "Id", "Name", worker.DepartmentNameId);
+            ViewData["PostId"] = new SelectList(_context.PostTypes, "Id", "PostType1", worker.PostId);
+            return View(worker);
         }
 
-        // GET: Rooms/Edit/5
+        // GET: Workers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,24 +79,24 @@ namespace LogKyrcach.Controllers
                 return NotFound();
             }
 
-            var room = await _context.Rooms.FindAsync(id);
-            if (room == null)
+            var worker = await _context.Workers.FindAsync(id);
+            if (worker == null)
             {
                 return NotFound();
             }
-            ViewData["IdDepartment"] = new SelectList(_context.Departments, "Id", "Name", room.IdDepartment);
-            ViewData["IdWorkplace"] = new SelectList(_context.Workplaces, "Id", "Id", room.Workplaces);
-            return View(room);
+            ViewData["DepartmentNameId"] = new SelectList(_context.Departments, "Id", "Name", worker.DepartmentNameId);
+            ViewData["PostId"] = new SelectList(_context.PostTypes, "Id", "PostType1", worker.PostId);
+            return View(worker);
         }
 
-        // POST: Rooms/Edit/5
+        // POST: Workers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RoomNumber,IdWorkplace,IdDepartment")] Room room)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Surname,FirstName,Patronymic,PhoneNumber,PostId,DepartmentNameId")] Worker worker)
         {
-            if (id != room.Id)
+            if (id != worker.Id)
             {
                 return NotFound();
             }
@@ -109,12 +105,12 @@ namespace LogKyrcach.Controllers
             {
                 try
                 {
-                    _context.Update(room);
+                    _context.Update(worker);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoomExists(room.Id))
+                    if (!WorkerExists(worker.Id))
                     {
                         return NotFound();
                     }
@@ -125,12 +121,12 @@ namespace LogKyrcach.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdDepartment"] = new SelectList(_context.Departments, "Id", "Name", room.IdDepartment);
-            ViewData["IdWorkplace"] = new SelectList(_context.Workplaces, "Id", "Id", room.Workplaces);
-            return View(room);
+            ViewData["DepartmentNameId"] = new SelectList(_context.Departments, "Id", "Name", worker.DepartmentNameId);
+            ViewData["PostId"] = new SelectList(_context.PostTypes, "Id", "PostType1", worker.PostId);
+            return View(worker);
         }
 
-        // GET: Rooms/Delete/5
+        // GET: Workers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,32 +134,32 @@ namespace LogKyrcach.Controllers
                 return NotFound();
             }
 
-            var room = await _context.Rooms
-                .Include(r => r.IdDepartmentNavigation)
-                .Include(r => r.Workplaces)
+            var worker = await _context.Workers
+                .Include(w => w.DepartmentName)
+                .Include(w => w.Post)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (room == null)
+            if (worker == null)
             {
                 return NotFound();
             }
 
-            return View(room);
+            return View(worker);
         }
 
-        // POST: Rooms/Delete/5
+        // POST: Workers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
-            _context.Rooms.Remove(room);
+            var worker = await _context.Workers.FindAsync(id);
+            _context.Workers.Remove(worker);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RoomExists(int id)
+        private bool WorkerExists(int id)
         {
-            return _context.Rooms.Any(e => e.Id == id);
+            return _context.Workers.Any(e => e.Id == id);
         }
     }
-} 
+}

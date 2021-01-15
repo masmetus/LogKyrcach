@@ -10,6 +10,7 @@ namespace LogKyrcach.Models
         public Computer()
         {
             Components = new HashSet<Component>();
+            Installedsoftwares = new HashSet<Installedsoftware>();
             Workplaces = new HashSet<Workplace>();
         }
 
@@ -22,6 +23,7 @@ namespace LogKyrcach.Models
 
         public virtual Computertype IdCompyterTypeNavigation { get; set; }
         public virtual ICollection<Component> Components { get; set; }
+        public virtual ICollection<Installedsoftware> Installedsoftwares { get; set; }
         public virtual ICollection<Workplace> Workplaces { get; set; }
     }
 }

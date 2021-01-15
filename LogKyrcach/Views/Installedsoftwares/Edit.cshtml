@@ -1,0 +1,74 @@
+﻿@model LogKyrcach.Models.Installedsoftware
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Installedsoftware</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="IdSoftware" class="control-label"></label>
+                <select asp-for="IdSoftware" class="form-control" asp-items="ViewBag.IdSoftware"></select>
+                <span asp-validation-for="IdSoftware" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdComputer" class="control-label"></label>
+                <input asp-for="IdComputer" class="form-control" />
+                <span asp-validation-for="IdComputer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LicenseStart" class="control-label"></label>
+                <input asp-for="LicenseStart" class="form-control" />
+                <span asp-validation-for="LicenseStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LicenseEnd" class="control-label"></label>
+                <input asp-for="LicenseEnd" class="form-control" />
+                <span asp-validation-for="LicenseEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeLicenseId" class="control-label"></label>
+                <select asp-for="TypeLicenseId" class="form-control" asp-items="ViewBag.TypeLicenseId"></select>
+                <span asp-validation-for="TypeLicenseId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdEnginere" class="control-label"></label>
+                <select asp-for="IdEnginere" class="form-control" asp-items="ViewBag.IdEnginere"></select>
+                <span asp-validation-for="IdEnginere" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InstallationDate" class="control-label"></label>
+                <input asp-for="InstallationDate" class="form-control" />
+                <span asp-validation-for="InstallationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkStatus" class="control-label"></label>
+                <input asp-for="WorkStatus" class="form-control" />
+                <span asp-validation-for="WorkStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRoom" class="control-label"></label>
+                <input asp-for="IdRoom" class="form-control" />
+                <span asp-validation-for="IdRoom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

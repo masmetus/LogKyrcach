@@ -189,12 +189,6 @@ namespace LogKyrcach.Models
                     .HasForeignKey(d => d.InstituteId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("department_ibfk_1");
-
-                entity.HasOne(d => d.Workers)
-                    .WithMany(p => p.Departments)
-                    .HasForeignKey(d => d.WorkersId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("department_ibfk_2");
             });
 
             modelBuilder.Entity<Efmigrationshistory>(entity =>
@@ -251,6 +245,12 @@ namespace LogKyrcach.Models
                 entity.Property(e => e.WorkStatus)
                     .IsRequired()
                     .HasDefaultValueSql("'1'");
+
+                entity.HasOne(d => d.IdComputerNavigation)
+                    .WithMany(p => p.Installedsoftwares)
+                    .HasForeignKey(d => d.IdComputer)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("installedsoftware_ibfk_10");
 
                 entity.HasOne(d => d.IdEnginereNavigation)
                     .WithMany(p => p.Installedsoftwares)
@@ -470,6 +470,8 @@ namespace LogKyrcach.Models
 
                 entity.HasIndex(e => e.PostId, "Post_ID");
 
+                entity.HasIndex(e => e.DepartmentNameId, "workers_ibfk_2");
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.DepartmentNameId).HasColumnName("DepartmentName_ID");
@@ -499,6 +501,12 @@ namespace LogKyrcach.Models
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.HasOne(d => d.DepartmentName)
+                    .WithMany(p => p.Workers)
+                    .HasForeignKey(d => d.DepartmentNameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("workers_ibfk_2");
 
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.Workers)

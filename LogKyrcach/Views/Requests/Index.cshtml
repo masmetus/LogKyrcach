@@ -1,0 +1,78 @@
+﻿@model IEnumerable<LogKyrcach.Models.Request>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Заявка</h1>
+
+<p>
+    <a asp-action="Create">Создать заявку</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdComputer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescriptionOfTheProblem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationClosingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEnginnerNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Installedsoftware)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Installedsoftware.IdComputerNavigation.Inv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionOfTheProblem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationClosingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEnginnerNavigation.Surname)
+
+                @Html.DisplayFor(modelItem => item.IdEnginnerNavigation.FirstName)
+
+                @Html.DisplayFor(modelItem => item.IdEnginnerNavigation.Patronymic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Installedsoftware.IdSoftwareNavigation.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

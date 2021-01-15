@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using LogKyrcach.Models;
 
 namespace LogKyrcach.Data
 {
@@ -12,5 +13,6 @@ namespace LogKyrcach.Data
             : base(options)
         {
         }
+        public DbSet<LogKyrcach.Models.Worker> Worker { get; set; }
     }
 }

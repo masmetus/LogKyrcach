@@ -23,6 +23,7 @@ namespace LogKyrcach.Models
         public bool? WorkStatus { get; set; }
         public int IdRoom { get; set; }
 
+        public virtual Computer IdComputerNavigation { get; set; }
         public virtual Worker IdEnginereNavigation { get; set; }
         public virtual Software IdSoftwareNavigation { get; set; }
         public virtual Typelicense TypeLicense { get; set; }
