@@ -55,14 +55,13 @@ namespace LogKyrcach.Controllers
         {
             ViewData["IdEnginner"] = new SelectList(_context.Workers, "Id", "FirstName");
 
-            ViewData["InstalledsoftwareId"] = new SelectList(_context.Requests
-                .Include(r => r.Installedsoftware)
-                .ThenInclude(r => r.IdComputerNavigation));
+            ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares
+                .Include(r => r.IdComputerNavigation)
+                .Select(x => new {id =x.Id, inv = x.IdComputerNavigation.Inv }), "id", "inv");
 
-             ViewData["InstalledsoftwareId"] = new SelectList(_context.Requests
-                 .Include(r => r.Installedsoftware)
-                 .ThenInclude(r => r.IdSoftwareNavigation)
-                 .Select(x => new {id = x.Id, name = x.Installedsoftware.IdSoftwareNavigation.Name }), "id", "name");
+             ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares                
+                 .Include(r => r.IdSoftwareNavigation)
+                 .Select(x => new {id = x.Id, name = x.IdSoftwareNavigation.Name }), "id", "name");
 
             return View();
         }
@@ -82,6 +81,7 @@ namespace LogKyrcach.Controllers
             }
             ViewData["IdEnginner"] = new SelectList(_context.Workers, "Id", "FirstName", request.IdEnginner);
             ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares, "Id", "Id", request.InstalledsoftwareId);
+            ViewData["IdComputer"] = new SelectList(_context.Installedsoftwares, "Id", "Id", request.IdComputer);
             return View(request);
         }
 
