@@ -4,16 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Заявка</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Создать заявку</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdRoom)
+                @Html.DisplayNameFor(model => model.IdRoomNavigation)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdComputer)
@@ -42,24 +42,31 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+
             <td>
-                @Html.DisplayFor(modelItem => item.Installedsoftware.IdRoomNavigation.RoomNumber)
+                @Html.DisplayFor(modelItem => item.IdRoomNavigation.RoomNumber)
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Installedsoftware.IdComputerNavigation.Inv)
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.RequestStatus)
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.ApplicationDate)
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.DescriptionOfTheProblem)
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.ApplicationClosingDate)
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.IdEngineerNavigation.Surname)
 
@@ -67,13 +74,14 @@
 
                 @Html.DisplayFor(modelItem => item.IdEngineerNavigation.Patronymic)
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Installedsoftware.IdSoftwareNavigation.Name)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> |
 
-                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

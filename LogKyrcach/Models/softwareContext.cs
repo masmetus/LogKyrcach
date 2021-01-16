@@ -377,6 +377,12 @@ namespace LogKyrcach.Models
                     .HasForeignKey(d => d.IdEngineer)
                     .HasConstraintName("request_ibfk_2");
 
+                entity.HasOne(d => d.IdRoomNavigation)
+                    .WithMany(p => p.Requests)
+                    .HasForeignKey(d => d.IdRoom)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("request_ibfk_4");
+
                 entity.HasOne(d => d.Installedsoftware)
                     .WithMany(p => p.Requests)
                     .HasForeignKey(d => d.InstalledsoftwareId)

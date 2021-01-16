@@ -22,18 +22,15 @@ namespace LogKyrcach.Controllers
         public async Task<IActionResult> Index()
         {
             var softwareContext = _context.Requests
-                .Include(r => r.Installedsoftware).ThenInclude(r => r.IdRoomNavigation)
-
-                .Include(r => r.Installedsoftware).ThenInclude(r => r.IdSoftwareNavigation)
-
-                .Include(r => r.IdEngineerNavigation).Include(r => r.Installedsoftware) 
-
-                .Include(r => r.Installedsoftware).ThenInclude(r => r.IdComputerNavigation);
+                .Include(r => r.IdEngineerNavigation).Include(r => r.Installedsoftware)
+                .Include(r => r.IdRoomNavigation)
+                .Include(r => r.Installedsoftware).ThenInclude(r => r.IdComputerNavigation)
+                .Include(r => r.Installedsoftware).ThenInclude(r => r.IdSoftwareNavigation);
             return View(await softwareContext.ToListAsync());
         }
 
         // GET: Requests/Details/5
-      /*  public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -41,31 +38,34 @@ namespace LogKyrcach.Controllers
             }
 
             var request = await _context.Requests
-               .Include(r => r.Installedsoftware).ThenInclude(r => r.IdSoftwareNavigation)
-               .Include(r => r.IdEngineerNavigation).Include(r => r.Installedsoftware)
-               .Include(r => r.Installedsoftware).ThenInclude(r => r.IdComputerNavigation)
-               .FirstOrDefaultAsync(m => m.Id == id);
-
+                .Include(r => r.IdEngineerNavigation)
+                .Include(r => r.IdRoomNavigation)
+                .Include(r => r.Installedsoftware)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (request == null)
             {
                 return NotFound();
             }
 
             return View(request);
-        } */
+        }
 
         // GET: Requests/Create
         public IActionResult Create()
         {
             ViewData["IdEngineer"] = new SelectList(_context.Workers, "Id", "FirstName");
 
-            ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares
+            ViewData["IdRoom"] = new SelectList(_context.Installedsoftwares
+                .Include(r => r.IdRoomNavigation)
+                .Select(x => new {id =x.Id, roomnumber = x.IdRoomNavigation.RoomNumber }),  "id", "roomnumber").Distinct().ToList();
+
+            ViewData["IdComputer"] = new SelectList(_context.Installedsoftwares
                 .Include(r => r.IdComputerNavigation)
                 .Select(x => new { id = x.Id, inv = x.IdComputerNavigation.Inv }), "id", "inv");
 
             ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares
                 .Include(r => r.IdSoftwareNavigation)
-                .Select(x => new { id = x.Id, name = x.IdSoftwareNavigation.Name }), "id", "name");
+                .Select(x => new {id =x.Id, name = x.IdSoftwareNavigation.Name }), "id", "name");
 
             return View();
         }
@@ -84,10 +84,8 @@ namespace LogKyrcach.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdEngineer"] = new SelectList(_context.Workers, "Id", "FirstName", request.IdEngineer);
-
+            ViewData["IdRoom"] = new SelectList(_context.Rooms, "Id", "RoomNumber", request.IdRoom);
             ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares, "Id", "Id", request.InstalledsoftwareId);
-
-            ViewData["IdComputer"] = new SelectList(_context.Installedsoftwares, "Id", "Id", request.IdComputer);
             return View(request);
         }
 
@@ -105,6 +103,7 @@ namespace LogKyrcach.Controllers
                 return NotFound();
             }
             ViewData["IdEngineer"] = new SelectList(_context.Workers, "Id", "FirstName", request.IdEngineer);
+            ViewData["IdRoom"] = new SelectList(_context.Rooms, "Id", "RoomNumber", request.IdRoom);
             ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares, "Id", "Id", request.InstalledsoftwareId);
             return View(request);
         }
@@ -142,6 +141,7 @@ namespace LogKyrcach.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdEngineer"] = new SelectList(_context.Workers, "Id", "FirstName", request.IdEngineer);
+            ViewData["IdRoom"] = new SelectList(_context.Rooms, "Id", "RoomNumber", request.IdRoom);
             ViewData["InstalledsoftwareId"] = new SelectList(_context.Installedsoftwares, "Id", "Id", request.InstalledsoftwareId);
             return View(request);
         }
@@ -156,6 +156,7 @@ namespace LogKyrcach.Controllers
 
             var request = await _context.Requests
                 .Include(r => r.IdEngineerNavigation)
+                .Include(r => r.IdRoomNavigation)
                 .Include(r => r.Installedsoftware)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (request == null)
