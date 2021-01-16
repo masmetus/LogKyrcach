@@ -17,23 +17,19 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.RoomNumber)
         </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IdDepartmentNavigation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IdDepartmentNavigation.Name)
-        </dd>
+       
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Редактировать</a> |
+    <a asp-action="Index">Назад</a>
 </div>
-<h1>Index</h1>
+
+
+<h1>Рабочие места</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Создать новое</a>
 </p>
 <table class="table">
     <thead>

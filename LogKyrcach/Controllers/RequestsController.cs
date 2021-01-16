@@ -57,7 +57,7 @@ namespace LogKyrcach.Controllers
 
             ViewData["IdRoom"] = new SelectList(_context.Installedsoftwares
                 .Include(r => r.IdRoomNavigation)
-                .Select(x => new {id =x.Id, roomnumber = x.IdRoomNavigation.RoomNumber }),  "id", "roomnumber").Distinct().ToList();
+                .Select(x => new {id =x.IdRoom, roomnumber = x.IdRoomNavigation.RoomNumber }).Distinct(),  "id", "roomnumber");
 
             ViewData["IdComputer"] = new SelectList(_context.Installedsoftwares
                 .Include(r => r.IdComputerNavigation)
