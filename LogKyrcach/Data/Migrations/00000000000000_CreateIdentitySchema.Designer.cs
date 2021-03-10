@@ -84,11 +84,11 @@ namespace LogKyrcach.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Login")
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<bool>("LoginConfirmed")
+                    b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -97,7 +97,7 @@ namespace LogKyrcach.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("NormalizedLogin")
+                    b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
@@ -126,8 +126,8 @@ namespace LogKyrcach.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedLogin")
-                        .HasName("LoginIndex");
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()

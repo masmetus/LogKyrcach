@@ -29,9 +29,9 @@ namespace LogKyrcach.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Login = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedLogin = table.Column<string>(maxLength: 256, nullable: true),
-                    LoginConfirmed = table.Column<bool>(nullable: false),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
@@ -181,9 +181,9 @@ namespace LogKyrcach.Data.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "LoginIndex",
+                name: "EmailIndex",
                 table: "AspNetUsers",
-                column: "NormalizedLogin");
+                column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
