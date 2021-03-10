@@ -13,6 +13,8 @@ namespace LogKyrcach.Data
             : base(options)
         {
         }
-        public DbSet<LogKyrcach.Models.Worker> Worker { get; set; }
+        //public DbSet<LogKyrcach.Models.Worker> Worker { get; set; }
+
+        public DbSet<Microsoft.AspNetCore.Identity.IdentityRole> Roles { get; set; }
     }
 }
